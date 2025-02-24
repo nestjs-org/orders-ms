@@ -1,0 +1,37 @@
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["prismaSchemaFolder"]
+}
+// prisma/schema.prisma
+datasource db {
+  provider  = "postgresql"
+  url  	    = env("DATABASE_URL")
+  // uncomment next line if you use Prisma <5.10
+  // directUrl = env("DATABASE_URL_UNPOOLED")
+}
+enum STATUS {
+  PENDING
+  DELIVERED
+  CANCELLED
+}
+model orders{
+  id String @id @default(uuid())
+  totalAmount Float
+  totalItems Int
+  paidAt DateTime?
+  status STATUS
+  paid Boolean @default(false)
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+  orderItems orderItem[]
+}
+
+model orderItem {
+  id String @id @default(uuid())
+  productId Int
+  quantity Int
+  price Float
+  orders orders @relation(fields: [ordersId], references: [id])
+  ordersId String
+}
