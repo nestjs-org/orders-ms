@@ -29,12 +29,24 @@ CREATE TABLE "orderItem" (
 -- CreateTable
 CREATE TABLE "orderStripe" (
     "id" TEXT NOT NULL,
+    "orderId" TEXT NOT NULL,
+    "stripeId" TEXT NOT NULL,
+    "receipt" TEXT NOT NULL,
 
     CONSTRAINT "orderStripe_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "orderStripe_orderId_key" ON "orderStripe"("orderId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "orderStripe_stripeId_key" ON "orderStripe"("stripeId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "orderStripe_receipt_key" ON "orderStripe"("receipt");
 
 -- AddForeignKey
 ALTER TABLE "orderItem" ADD CONSTRAINT "orderItem_ordersId_fkey" FOREIGN KEY ("ordersId") REFERENCES "orders"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "orderStripe" ADD CONSTRAINT "orderStripe_id_fkey" FOREIGN KEY ("id") REFERENCES "orders"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "orderStripe" ADD CONSTRAINT "orderStripe_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "orders"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

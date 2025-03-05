@@ -16,6 +16,7 @@ export class OrdersController {
      throw new RpcException(err)
     })
      const stripeOrder = await this.ordersService.createSessionWithOrder(order);
+     console.log({ order, stripeOrder })
      return { order, stripeOrder };
   }
 
