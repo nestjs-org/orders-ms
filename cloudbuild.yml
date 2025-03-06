@@ -1,0 +1,21 @@
+
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "-t",
+        "us-east4-docker.pkg.dev/microservices-curso-452723/repositorio-google-image-registry/orders-ms",
+        "-f",
+        "dockerfile.prod",
+        "--platform=linux/amd64",
+        ".",
+      ]
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "push",
+        "us-east4-docker.pkg.dev/microservices-curso-452723/repositorio-google-image-registry/orders-ms",
+      ]
+options:
+  defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
