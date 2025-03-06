@@ -12,7 +12,7 @@ steps:
       ]
 availableSecrets:
   secretManager:
-  - versionName: projects/712349389361/secrets/orders_database_url
+  - versionName: projects/712349389361/secrets/orders_database_url/versions/1
     env: 'DATABASE_URL'
 options:
   defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
