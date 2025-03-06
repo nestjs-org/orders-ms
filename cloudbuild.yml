@@ -2,7 +2,7 @@
 steps:
   - name: "gcr.io/cloud-builders/docker"
     entrypoint: 'bash'
-    args: ["-c","build","-t","us-east4-docker.pkg.dev/microservices-curso-452723/repositorio-google-image-registry/orders-ms","-f","dockerfile.prod",'--build_arg','URL_DATABASE_ARGUMENT=$$DATABASE_URL',"--platform=linux/amd64",".",]
+    args: ["-c","build","-t","us-east4-docker.pkg.dev/microservices-curso-452723/repositorio-google-image-registry/orders-ms","-f","dockerfile.prod",'--build_arg','URL_DATABASE_ARGUMENT=$$DATABASE_URL',"--platform=linux/amd64","."]
     secretEnv: ['DATABASE_URL']
   - name: "gcr.io/cloud-builders/docker"
     args:
