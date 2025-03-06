@@ -21,7 +21,7 @@ WORKDIR /usr/src/app
 COPY --from=build /usr/src/app/node_modules ./node_modules
 COPY --from=build /usr/src/app/prisma ./prisma
 ARG URL_DATABASE_ARGUMENT
-RUN echo "databaseurl: ::: $URL_DATABASE_ARGUMENT"
+RUN echo "databaseurl ::: $URL_DATABASE_ARGUMENT"
 ENV DATABASE_URL=${URL_DATABASE_ARGUMENT}
 RUN npx prisma migrate deploy
 COPY --from=build /usr/src/app/dist ./dist
