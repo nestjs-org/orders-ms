@@ -25,6 +25,7 @@ model orders{
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
   orderItems orderItem[]
+  stripeOrder orderStripe?
 }
 
 model orderItem {
@@ -34,4 +35,12 @@ model orderItem {
   price Float
   orders orders @relation(fields: [ordersId], references: [id])
   ordersId String
+}
+
+model orderStripe {
+  id String @id @default(uuid())
+  order orders @relation(fields: [orderId],references: [id]) 
+  orderId String @unique
+  stripeId String @unique
+  receipt String @unique
 }

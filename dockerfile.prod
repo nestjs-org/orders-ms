@@ -1,0 +1,31 @@
+FROM node:23-alpine3.20 as deps
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+RUN npm install
+
+FROM node:23-alpine3.20 as build
+
+WORKDIR /usr/src/app
+COPY --from=deps /usr/src/app/node_modules /node_modules
+COPY . .
+RUN npx prisma generate
+RUN npm run build
+
+RUN npm ci -f --only=production && npm cache clean --force
+FROM node:23-alpine3.20 as prod
+WORKDIR /usr/src/app
+
+COPY --from=build /usr/src/app/node_modules ./node_modules
+COPY --from=build /usr/src/app/prisma ./prisma
+ARG URL_DATABASE_ARGUMENT
+RUN echo "databaseurl ::: $URL_DATABASE_ARGUMENT"
+ENV DATABASE_URL=${URL_DATABASE_ARGUMENT}
+RUN npx prisma migrate deploy
+COPY --from=build /usr/src/app/dist ./dist
+
+EXPOSE 3000
+
+CMD ["node","dist/main.js"]

@@ -5,6 +5,7 @@ import { envs } from './config/envs';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
+  
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule,{
     transport: Transport.NATS,
     options:{
